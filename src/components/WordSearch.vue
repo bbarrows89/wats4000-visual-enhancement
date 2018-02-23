@@ -33,9 +33,10 @@
           </li>
         </transition-group>
       </ul>
-      <!-- TODO: Add message to display here if no results are found. -->
-
-
+      <div v-else-if="results && results.length == 0" class="no-results">
+        <h2>No Results Found</h2>
+        <p>Please adjust your search to find more words.</p>
+      </div>
     </div>
   </div>
 </template>
@@ -46,7 +47,6 @@ import axios from 'axios';
 require('vue2-animate/dist/vue2-animate.min.css');
 import CubeSpinner from '@/components/CubeSpinner';
 import MessageContainer from '@/components/MessageContainer';
-
 
 export default {
   name: 'WordSearch',
