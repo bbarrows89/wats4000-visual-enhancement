@@ -17,20 +17,21 @@
     <div class="word-list-container">
       <h2>Word List</h2>
       <ul class="word-list">
-        <!-- TODO: Add transition-group around the list item here to animate items in the word list. -->
-        <transition-group 
-          <li v-for="word in wordList">{{ word }}&nbsp;<button v-on:click="removeWord(word)" class="remove-word">x</button></li>
+        <transition-group name="slideRight" tag="div" appear> 
+          <li v-for="word in wordList" :key="word">{{ word }}&nbsp;<button v-on:click="removeWord(word)" class="remove-word">x</button></li>
+        </transition-group>
       </ul>
     </div>
     <div class="results-container">
       <spinner v-if="showSpinner"></spinner>
       <h2 v-if="results && results.length > 0">{{ results.length }} Words Found</h2>
       <ul v-if="results && results.length > 0" class="results">
-        <!-- TODO: Add transition-group around the list item here to animate items in the results list. -->
-          <li v-for="item in results" class="item">
+        <transition-group name="fade" tag="div" appear>
+          <li v-for="item in results" :key="item.word" class="item">
             <p class="result-word">{{ item.word }}</p>
             <p><button v-on:click="addWord(item.word)" class="add-word">Add to WordList</button></p>
           </li>
+        </transition-group>
       </ul>
       <!-- TODO: Add message to display here if no results are found. -->
 
