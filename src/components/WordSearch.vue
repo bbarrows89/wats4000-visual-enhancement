@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="messages">
-      <!-- TODO: Add message-container and supply messages property. -->
+      <message-container :messages="messages"></message-container>
     </div>
     <div class="word-search">
       <form v-on:submit.prevent="findWords">
@@ -52,7 +52,7 @@ export default {
   name: 'WordSearch',
   components: {
     // TODO: Define child components here.
-    spinner: CubeSpinner
+    spinner: CubeSpinner,
     'message-container': MessageContainer
   },
   data () {
@@ -72,18 +72,24 @@ export default {
       if (this.wordList.indexOf(word) === -1) {
         this.wordList.push(word);
         console.log(`Added ${word} to wordList.`);
-        // TODO: Add message to this.messages to reflect this change.
-
+        this.messages.push({
+          type: 'success',
+          text: `${word} added to Word List.`
+        });
       } else {
         console.log('Word is already on wordlist.');
-        // TODO: Add message to this.messages to reflect this change.
-
+          this.messages.push({
+            type: 'info',
+            text: `${word} already on Word List`
+          })
       }
     },
     removeWord: function (word) {
       this.wordList.splice(this.wordList.indexOf(word), 1);
-      // TODO: Add message to this.messages to reflect this change.
-
+      this.messages.push({
+        type: 'success',
+        text: `${word} removed from Word List.`
+      })
     },
     findWords: function() {
       this.showSpinner = true;
@@ -101,8 +107,10 @@ export default {
       })
       .catch( error => {
         this.showSpinner = false;
-        // TODO: Add message to this.messages to display the errors.
-
+        this.messages.push({
+          type: 'error',
+          text: error.message
+        })
       })
     }
   }
@@ -113,7 +121,7 @@ export default {
 .word-search {
   font-size: 1.2rem;
   white-space: nowrap;
-  display: inline-block;
+  display: block;
   width: 70%;
   float: left;
 }
